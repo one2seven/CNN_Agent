@@ -1,0 +1,24 @@
+{
+  "old_version": "model_v1",
+  "new_version": "model_v2",
+  "generated_at": "2026-08-13T13:07:02",
+  "old_metrics": {
+    "accuracy": 0.7583333333333333,
+    "ok_precision": 0.6741573033707865,
+    "ok_recall": 1.0,
+    "ng_precision": 1.0,
+    "ng_recall": 0.5166666666666667
+  },
+  "new_metrics": {
+    "accuracy": 0.7833333333333333,
+    "ok_precision": 0.6976744186046512,
+    "ok_recall": 1.0,
+    "ng_precision": 1.0,
+    "ng_recall": 0.5666666666666667
+  },
+  "regression_count": 1,
+  "improvement_count": 4,
+  "regression_rate": 0.008333333333333333,
+  "approved": true,
+  "report_path": "state/reports/report_20260813_130702.md"
+}

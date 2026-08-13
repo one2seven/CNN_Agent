@@ -222,107 +222,107 @@
     },
     {
       "id": "IC-112",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "평가",
       "title": "model_v1 vs model_v2 비교 지표 산출",
-      "summary": "완료: scripts/compare_models.py를 실행하면 고정된 data/val 셋에 대해 두 모델의 Accuracy·OK/NG Precision·Recall이 계산되어 출력된다",
+      "summary": "완료: scripts/compare_models.py 실행 후 고정된 data/val(120장)에서 Accuracy·OK/NG Precision·Recall이 계산됨 (model_v1 75.83% -> model_v2 78.33%)",
       "where": "scripts/compare_models.py",
       "parent": null,
       "deps": [
         "IC-111"
       ],
       "doc": "SPEC.md §2, §3 Phase 4",
-      "done_at": null,
+      "done_at": "2026-08-13",
       "note": "비교는 반드시 data/val(고정 검증셋)만 사용한다 — 재학습에 쓴 데이터로 비교하면 공정하지 않다(PLAN.md '중요한 요구사항: 검증 데이터 관리')."
     },
     {
       "id": "IC-113",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "평가",
       "title": "비교 리포트(report.md) 생성",
-      "summary": "완료: compare_models.py 실행 후 state/reports/report_<timestamp>.md가 생성되고, 지표 표와 함께 기존엔 맞았는데 신규에서 틀린 이미지·그 반대 목록이 들어있다",
+      "summary": "완료: compare_models.py 실행 후 state/reports/report_<timestamp>.md와 latest_comparison.json이 생성되고, 지표 표·regression 1장·improvement 4장 목록·결론(적용 가능)이 들어있다",
       "where": "scripts/compare_models.py",
       "parent": null,
       "deps": [
         "IC-112"
       ],
       "doc": "SPEC.md §2",
-      "done_at": null,
+      "done_at": "2026-08-13",
       "note": "PLAN.md ④ Phase 4 완료 기준(report.md에 지표 표 포함)과 직결."
     },
     {
       "id": "IC-114",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "배포",
       "title": "승인 게이트 및 모델 교체 스크립트",
-      "summary": "완료: state/approve.txt 없이 scripts/apply_model.py를 실행하면 실패(거부)하고, approve.txt를 만든 뒤 실행하면 models/current.txt가 model_v2로 바뀐다",
+      "summary": "완료: scripts/apply_model.py는 판정이 '적용 가능'이고 state/approve.txt가 있을 때만 models/current.txt를 후보 버전으로 바꾸고 approve.txt를 소비(삭제)한다. 실제 model_v2 적용은 사용자 승인 대기 중(별도 확인)",
       "where": "scripts/apply_model.py",
       "parent": null,
       "deps": [
         "IC-113"
       ],
       "doc": "SPEC.md §3 Phase 4",
-      "done_at": null,
-      "note": "PLAN.md ⑤ '내가 직접 승인할 지점' — 되돌리기 어려운 동작(운영 모델 교체)의 유일한 승인 게이트."
+      "done_at": "2026-08-13",
+      "note": "PLAN.md ⑤ '내가 직접 승인할 지점' — 되돌리기 어려운 동작(운영 모델 교체)의 유일한 승인 게이트. 판정 자체도 함께 확인한다 — approve.txt가 있어도 '적용 불가' 판정이면 거부한다(IC-117)."
     },
     {
       "id": "IC-115",
-      "status": "todo",
+      "status": "done",
       "priority": "검증",
       "category": "검증",
       "title": "Review Queue 최소 1건 보장 확인",
-      "summary": "완료: 처음부터 끝까지(데이터 생성→추론) 다시 실행해도 review_queue.json에 매번 1건 이상 채워지는 것을 확인한다",
+      "summary": "완료: 데이터 재생성→추론을 두 차례 독립적으로 실행했고(노이즈 추가 전후), 매번 review_queue.json에 1건 이상(12건, 25건) 채워지는 것을 확인했다",
       "where": "scripts/",
       "parent": null,
       "deps": [
         "IC-108"
       ],
       "doc": "PLAN.md 고칠 곳 #2",
-      "done_at": null,
-      "note": "합성 데이터가 너무 쉬우면 review_queue가 비어 Phase 3 이후가 막힌다 — ambiguous_ratio가 실제로 이걸 보장하는지 반복 실행으로 검증."
+      "done_at": "2026-08-13",
+      "note": "합성 데이터가 너무 쉬우면 review_queue가 비어 Phase 3 이후가 막힌다 — ambiguous_ratio + benign_artifact_ratio(IC-125)가 실제로 이걸 보장하는지 반복 실행으로 검증."
     },
     {
       "id": "IC-116",
-      "status": "todo",
+      "status": "done",
       "priority": "검증",
       "category": "검증",
       "title": "승인 게이트 거부 케이스 확인",
-      "summary": "완료: state/approve.txt를 지운 상태에서 apply_model.py를 실행하면 models/current.txt가 바뀌지 않고 에러/거부 메시지가 출력된다",
+      "summary": "완료: state/approve.txt 없이 apply_model.py를 실행하면 exit code 1과 함께 REJECTED가 출력되고 models/current.txt는 생성되지 않는다",
       "where": "scripts/apply_model.py",
       "parent": null,
       "deps": [
         "IC-114"
       ],
       "doc": "PLAN.md ⑤",
-      "done_at": null,
-      "note": "승인 없이 교체가 '조용히' 성공하면 안 된다 — 반드시 실패로 끝나야 한다."
+      "done_at": "2026-08-13",
+      "note": "승인 없이 교체가 '조용히' 성공하면 안 된다 — 반드시 실패로 끝나야 한다. 확인됨."
     },
     {
       "id": "IC-117",
-      "status": "todo",
+      "status": "done",
       "priority": "검증",
       "category": "검증",
       "title": "성능 저하 시 미적용 확인",
-      "summary": "완료: model_v2의 val accuracy가 model_v1보다 낮게 나오도록 라벨을 일부러 잘못 입력해 재학습한 뒤 비교를 돌리면, 리포트가 '적용 불가'로 표시되고 current.txt는 바뀌지 않는다",
-      "where": "scripts/compare_models.py",
+      "summary": "완료: 항상 OK만 예측하는 더미 model_v3(val accuracy 50%)을 만들어 비교했더니 리포트가 '적용 불가'(regression 25.8%)로 표시됐고, approve.txt를 만들어도 apply_model.py가 '판정 미통과'로 거부해 current.txt가 바뀌지 않았다",
+      "where": "scripts/compare_models.py, scripts/apply_model.py",
       "parent": null,
       "deps": [
         "IC-113"
       ],
       "doc": "PLAN.md '중요한 요구사항: 기존 모델보다 나빠지면 안 됨'",
-      "done_at": null,
-      "note": "이 프로젝트에서 가장 중요한 안전장치 — 실패 케이스를 일부러 만들어 정말 막히는지 확인한다."
+      "done_at": "2026-08-13",
+      "note": "이 프로젝트에서 가장 중요한 안전장치 — approve.txt만으론 우회되지 않는다는 것까지 확인(defense in depth). 테스트용 model_v3는 검증 후 삭제함."
     },
     {
       "id": "IC-118",
-      "status": "todo",
+      "status": "done",
       "priority": "검증",
       "category": "검증",
       "title": "전체 루프 1회 통합 실행 확인",
-      "summary": "완료: 데이터 생성→model_v1 학습→신규 이미지 추론→리뷰 큐 라벨링→재학습→비교→승인→적용까지 스크립트를 순서대로 실행해도 중간에 에러 없이 끝까지 돈다",
+      "summary": "완료: 데이터 생성→model_v1 학습→신규 이미지 추론→리뷰 큐 라벨링(실제 사람이 분류)→재학습→비교→리포트까지 에러 없이 끝까지 돌았다. 마지막 '적용' 단계는 설계대로 사람 승인(approve.txt) 대기 중",
       "where": "scripts/",
       "parent": null,
       "deps": [
@@ -330,8 +330,8 @@
         "IC-116"
       ],
       "doc": "PLAN.md ⑤",
-      "done_at": null,
-      "note": "이게 통과하면 MVP(PLAN.md ③ '반드시') 전체가 실제로 동작한다는 뜻이다."
+      "done_at": "2026-08-13",
+      "note": "MVP(PLAN.md ③ '반드시') 전체가 실제로 동작함을 확인했다. approve.txt를 만드는 마지막 승인은 의도적으로 사람 몫으로 남겨둔다."
     },
     {
       "id": "IC-124",

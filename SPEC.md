@@ -24,8 +24,10 @@ state/
     <미분류 이미지>.png        # 아직 ok/ng로 안 옮긴 것
     ok/                        # 사람이 정상이라고 판단해 옮긴 이미지
     ng/                        # 사람이 불량이라고 판단해 옮긴 이미지
-  approve.txt                # (Phase 4) 존재해야 모델 교체 스크립트가 실행됨
-  reports/report_<timestamp>.md   # (Phase 4)
+  approve.txt                # (Phase 4) 사람이 직접 만들어야 함 — apply_model.py가 성공 시 삭제(1회성)
+  reports/
+    report_<timestamp>.md      # 완료 (Phase 4) — compare_models.py가 매 실행마다 생성
+    latest_comparison.json      # 완료 — apply_model.py가 읽는 구조화된 판정 결과
 scripts/
   generate_data.py    # 완료 — train/val/new(manifest 포함) 모두 생성
   common.py            # 완료 — 이미지 로딩/특징 추출 공용 모듈
@@ -34,8 +36,8 @@ scripts/
   prepare_review_inbox.py  # 완료 (Phase 3) — 미판정 이미지를 review_inbox/로 복사 + content_hash 기록
   label_review_queue.py     # 완료 (Phase 3) — review_inbox/ok, ng를 스캔해 사람 판정을 review_queue.json에 반영
   retrain.py            # 완료 (Phase 3) — 트리거 판단(--check) + 사람 라벨 반영 재학습 → model_v2
-  compare_models.py     # (Phase 4) model_v1 vs model_v2 비교 + report.md 생성
-  apply_model.py        # (Phase 4) approve.txt 있을 때만 current.txt 교체
+  compare_models.py     # 완료 (Phase 4) — 기준 vs 후보 모델 비교 + report.md/latest_comparison.json 생성
+  apply_model.py        # 완료 (Phase 4) — 판정 "적용 가능" AND approve.txt 있을 때만 current.txt 교체
 ```
 
 ## 2. 데이터 스키마
@@ -105,10 +107,10 @@ scripts/
 5. `retrain.py`: 트리거 조건(제안값 20건 — 코칭에서 확정, IC-122) 충족 시 그 항목들을 로드해 `train_model.train(version=<다음 버전>, extra_X=..., extra_y=...)` 호출, 성공하면 사용한 항목에 `used_for_version`을 표시(중복 재사용 방지)
 6. 완료 조건: `model_v2.joblib` 생성됨 — 확인됨(base 400장 + 리뷰 25장 = 425장, val accuracy 75.8%(model_v1) → 78.3%(model_v2))
 
-### Phase 4 — 비교 + 리포트 + 승인 게이트
-- `compare_models.py`: 고정 `data/val`셋에 대해 `model_v1`, `model_v2` 각각 추론 → 지표 계산 → `report.md` 생성
-- 적용 기준(제안값 — 코칭에서 확정): `model_v2` accuracy가 `model_v1` 이상이고, 기존에 맞았는데 신규에서 틀리는 이미지 비율이 일정 수준(제안 5%) 이하일 때만 "적용 가능"으로 표시
-- `apply_model.py`: `state/approve.txt` 파일이 있을 때만 `models/current.txt`를 `model_v2`로 교체. 없으면 실행이 실패(거부)해야 함 — 이게 PLAN.md ⑤의 사람 승인 게이트
+### Phase 4 — 비교 + 리포트 + 승인 게이트 (완료)
+- `compare_models.py`: 고정 `data/val`셋(120장)에 대해 기준 모델(기본값: `models/current.txt`, 없으면 `model_v1`)과 후보 모델(기본값: 가장 높은 버전 번호) 각각 추론 → Accuracy/OK·NG Precision·Recall 계산 → `state/reports/report_<timestamp>.md` 생성 + `state/reports/latest_comparison.json`에 구조화된 판정 결과 저장
+- 적용 기준(제안값 — 코칭에서 확정, IC-122): accuracy가 낮아지지 않고, 기존엔 맞았는데 후보에서 틀리는 이미지 비율(regression rate)이 5% 이하일 때만 "적용 가능". 실측: model_v1(75.8%) → model_v2(78.3%), regression 1/120(0.8%), improvement 4장 → **적용 가능**
+- `apply_model.py`: `latest_comparison.json`의 판정이 "적용 가능"이고 **동시에** `state/approve.txt`가 있을 때만 `models/current.txt`를 후보 버전으로 교체(적용 후 `approve.txt`는 삭제되어 1회성 승인으로 소비됨). 판정이 "적용 불가"면 `approve.txt`가 있어도 무조건 거부 — 사람 승인이 나쁜 모델 적용의 우회 경로가 되지 않게 함(PLAN.md '기존 모델보다 나빠지면 안 됨')
 
 ## 4. 아직 확정 안 된 것 (PLAN.md "1:1 코칭에서 가장 묻고 싶은 것" 및 "고칠 곳"과 연결)
 - confidence 임계값, 재학습 트리거 개수, 적용 승인 임계치 — 위 제안값은 구현을 막지 않기 위한 기본값일 뿐, 코칭에서 조정 예정

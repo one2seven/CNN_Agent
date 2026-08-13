@@ -27,6 +27,8 @@ py prepare_review_inbox.py  # copy pending review-queue images into state/review
 py label_review_queue.py    # scan state/review_inbox/{ok,ng}/ and apply human labels back to the queue
 py retrain.py --check       # report whether enough reviewed-and-unused items exist to retrain
 py retrain.py               # if eligible, train the next model_v<N> on train data + reviewed items
+py compare_models.py        # compare current model vs highest model_vN on data/val, write report + latest_comparison.json
+py apply_model.py           # switch models/current.txt to the candidate, but only if approved AND state/approve.txt exists
 ```
 
 `train_model.py` exposes `train(version, train_dir=None, extra_X=None, extra_y=None)` — this is the entry

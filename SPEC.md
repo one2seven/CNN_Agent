@@ -14,7 +14,7 @@ data/
     manifest.json             # [{filename, line_label}] — 기존 라인 QA 판정
 models/
   model_v1.joblib / model_v1.json
-  model_v2.joblib / model_v2.json   # (Phase 3+)
+  model_v2.joblib / model_v2.json   # 완료 (Phase 3) — base 400장 + 리뷰 25장, val accuracy 78.3%
   current.txt                        # (Phase 4) 현재 운영 모델 버전 이름 1줄
 state/
   review_queue.json         # 완료 (Phase 2, infer.py가 생성; content_hash 필드는 Phase 3에서 추가)
@@ -33,7 +33,7 @@ scripts/
   infer.py              # 완료 (Phase 2) — 신규 이미지 추론 + Review Queue 수집
   prepare_review_inbox.py  # 완료 (Phase 3) — 미판정 이미지를 review_inbox/로 복사 + content_hash 기록
   label_review_queue.py     # 완료 (Phase 3) — review_inbox/ok, ng를 스캔해 사람 판정을 review_queue.json에 반영
-  retrain.py            # (Phase 3) 사람 라벨 반영 재학습 → model_v2
+  retrain.py            # 완료 (Phase 3) — 트리거 판단(--check) + 사람 라벨 반영 재학습 → model_v2
   compare_models.py     # (Phase 4) model_v1 vs model_v2 비교 + report.md 생성
   apply_model.py        # (Phase 4) approve.txt 있을 때만 current.txt 교체
 ```
@@ -51,13 +51,15 @@ scripts/
     "reason": "mismatch",
     "human_label": null,
     "reviewed_at": null,
-    "content_hash": "sha256 hex digest"
+    "content_hash": "sha256 hex digest",
+    "used_for_version": null
   }
 ]
 ```
 - `reason`: `"mismatch"`(모델 판정이 기존 라인 QA 판정과 다름, 우선순위 높음) / `"low_confidence"`(둘은 같지만 confidence가 임계값 미만) / `"manual_flag"`(사용자가 직접 지정 — 미구현)
 - `human_label`/`reviewed_at`은 Phase 3에서 사람이 채움. 채워진 항목만 재학습 데이터 후보가 됨.
 - `content_hash`는 `prepare_review_inbox.py`가 이미지 파일 내용을 sha256으로 해시해 채운다. 사람이 `review_inbox/`에서 파일을 옮기며 이름을 바꾸거나 하위 폴더를 만들어도 내용은 그대로이므로, `label_review_queue.py`는 파일명이 아니라 이 해시로 원본 큐 항목을 다시 찾는다.
+- `used_for_version`은 `retrain.py`가 그 항목을 실제로 재학습에 사용한 뒤 버전 이름(예: `"model_v2"`)으로 채운다. 이미 채워진 항목은 다음 재학습 트리거 판단에서 제외되어 중복 사용되지 않는다.
 - 신규 이미지는 `data/new/manifest.json`에 `{filename, line_label}`로 나열되고, `line_label`이 위 `reason: mismatch` 판정에 쓰이는 기존 라인 QA 판정이다(`generate_data.py`의 `generate_new_batch`).
 
 ### `models/<version>.json` (Phase 1에서 구현 완료)
@@ -99,9 +101,9 @@ scripts/
    - 큐에 없는 내용의 파일(오분류/실수로 섞인 파일) → "알 수 없는 파일"로 보고하고 무시
    - 같은 이미지가 `ok/`와 `ng/` 모두에 있음(복사 실수) → "충돌"로 보고하고 라벨링하지 않음(둘 중 하나를 지우고 재실행해야 함)
    - 아직 어느 폴더에도 없음 → 그대로 pending 유지
-4. `retrain.py`: `human_label`이 채워진 항목만 골라 이미지를 로드하고 `train_model.train(version="model_v2", extra_X=..., extra_y=...)` 호출
-5. 재학습 트리거 조건(제안값 — 코칭에서 확정): `human_label` 채워진 신규 항목이 20건 이상 쌓이면 실행 가능 상태로 표시
-6. 완료 조건: `model_v2.joblib` 생성됨
+4. `retrain.py --check`: `human_label`이 채워졌고 아직 재학습에 안 쓰인(`used_for_version`이 null인) 항목 수를 세어 READY/WAITING을 출력
+5. `retrain.py`: 트리거 조건(제안값 20건 — 코칭에서 확정, IC-122) 충족 시 그 항목들을 로드해 `train_model.train(version=<다음 버전>, extra_X=..., extra_y=...)` 호출, 성공하면 사용한 항목에 `used_for_version`을 표시(중복 재사용 방지)
+6. 완료 조건: `model_v2.joblib` 생성됨 — 확인됨(base 400장 + 리뷰 25장 = 425장, val accuracy 75.8%(model_v1) → 78.3%(model_v2))
 
 ### Phase 4 — 비교 + 리포트 + 승인 게이트
 - `compare_models.py`: 고정 `data/val`셋에 대해 `model_v1`, `model_v2` 각각 추론 → 지표 계산 → `report.md` 생성

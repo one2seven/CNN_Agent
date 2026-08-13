@@ -25,6 +25,8 @@ py train_model.py     # train model_v1 from data/train, evaluate on data/val, sa
 py infer.py           # run current model over data/new, update state/review_queue.json
 py prepare_review_inbox.py  # copy pending review-queue images into state/review_inbox/
 py label_review_queue.py    # scan state/review_inbox/{ok,ng}/ and apply human labels back to the queue
+py retrain.py --check       # report whether enough reviewed-and-unused items exist to retrain
+py retrain.py               # if eligible, train the next model_v<N> on train data + reviewed items
 ```
 
 `train_model.py` exposes `train(version, train_dir=None, extra_X=None, extra_y=None)` — this is the entry

@@ -174,51 +174,51 @@
     },
     {
       "id": "IC-109",
-      "status": "in_progress",
+      "status": "done",
       "priority": "핵심",
       "category": "검토",
       "title": "Review Queue 사람 라벨링 (폴더 분류 방식)",
-      "summary": "완료: state/review_inbox/에 미판정 이미지가 복사되어 있고, 사람이 그 이미지를 열어보고 ok/ 또는 ng/ 폴더로 옮긴 뒤 라벨링 스크립트를 실행하면 review_queue.json의 human_label·reviewed_at이 채워진다",
+      "summary": "완료: state/review_inbox/의 25장을 사람이 직접 열어보고 ok/ng 폴더로 분류, label_review_queue.py 실행 후 25건 전부 human_label·reviewed_at이 채워짐(충돌 0, 알 수 없는 파일 0)",
       "where": "scripts/prepare_review_inbox.py, scripts/label_review_queue.py",
       "parent": null,
       "deps": [
         "IC-108"
       ],
       "doc": "SPEC.md §3 Phase 3",
-      "done_at": null,
-      "note": "PLAN.md ③ '화면일 필요는 없음' — 파일 탐색기로 폴더에 옮기는 것만으로 판정. 도구는 완성·검증됨(IC-124), 실제 12건은 사람이 review_inbox/를 분류해야 완료된다."
+      "done_at": "2026-08-13",
+      "note": "PLAN.md ③ '화면일 필요는 없음' — 파일 탐색기로 폴더에 옮기는 것만으로 판정. 사람 판정이 원래 생성 시 line_label과 21/25 일치, 4건은 다르게 판단됨(정상 — 사람이 직접 본 결과이지 정답 재현이 아님)."
     },
     {
       "id": "IC-110",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "재학습",
       "title": "재학습 트리거 조건 판단",
-      "summary": "완료: 판단 스크립트를 실행하면 human_label이 채워진 미사용 항목 수와 함께 재학습 가능/대기 상태가 출력된다",
+      "summary": "완료: retrain.py --check 실행 시 human_label이 채워지고 아직 재학습에 안 쓰인 항목 수(25)와 함께 READY 상태가 출력된다",
       "where": "scripts/retrain.py",
       "parent": null,
       "deps": [
         "IC-109"
       ],
       "doc": "SPEC.md §3 Phase 3",
-      "done_at": null,
-      "note": "기준 개수는 제안값 20건(SPEC.md §3 Phase 3) — 코칭에서 확정(IC-122)."
+      "done_at": "2026-08-13",
+      "note": "기준 개수는 제안값 20건(SPEC.md §3 Phase 3) — 코칭에서 확정(IC-122). 25 >= 20으로 READY 확인됨."
     },
     {
       "id": "IC-111",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "재학습",
       "title": "model_v2 재학습 실행",
-      "summary": "완료: retrain.py 실행 후 models/model_v2.joblib과 model_v2.json이 새로 생성되고, n_train에 기존 train 데이터 + 사람이 라벨링한 데이터 수가 반영되어 있다",
+      "summary": "완료: retrain.py 실행 후 models/model_v2.joblib과 model_v2.json이 생성됨. n_train=425(기존 400 + 리뷰 25건), val accuracy 75.8%(v1) → 78.3%(v2)",
       "where": "scripts/retrain.py",
       "parent": null,
       "deps": [
         "IC-110"
       ],
       "doc": "SPEC.md §3 Phase 3",
-      "done_at": null,
-      "note": "train_model.train(version=\"model_v2\", extra_X=..., extra_y=...)을 호출한다 — 학습 로직을 새로 만들지 않는다."
+      "done_at": "2026-08-13",
+      "note": "train_model.train(version=\"model_v2\", extra_X=..., extra_y=...)을 호출한다 — 학습 로직을 새로 만들지 않는다. 사용된 리뷰 항목 25건은 review_queue.json에 used_for_version=model_v2로 표시되어 다음 재학습에 중복 사용되지 않는다."
     },
     {
       "id": "IC-112",

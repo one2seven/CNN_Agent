@@ -93,6 +93,7 @@ def run(new_dir=None):
                 "reason": reason,
                 "human_label": None,
                 "reviewed_at": None,
+                "used_for_version": None,
             }
         )
         added += 1

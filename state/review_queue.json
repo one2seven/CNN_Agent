@@ -5,9 +5,10 @@
     "predicted_label": "ng",
     "confidence": 0.5466666666666666,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "bcd5fee8de7027e2f39022d675d596e5578dc233856e89d13747ca8f93476028"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "bcd5fee8de7027e2f39022d675d596e5578dc233856e89d13747ca8f93476028",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0002.png",
@@ -15,9 +16,10 @@
     "predicted_label": "ok",
     "confidence": 0.6866666666666666,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "523747789bb6a29f3b6fcc9924f461ea4e35d133c9f5a1e3711ec748382dab26"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "523747789bb6a29f3b6fcc9924f461ea4e35d133c9f5a1e3711ec748382dab26",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0003.png",
@@ -25,9 +27,10 @@
     "predicted_label": "ok",
     "confidence": 0.5266666666666666,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "972a21c1d988080c2e3f913ab1d0dff6415d34a3818bde622994e8411c4ce84f"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "972a21c1d988080c2e3f913ab1d0dff6415d34a3818bde622994e8411c4ce84f",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0004.png",
@@ -35,9 +38,10 @@
     "predicted_label": "ok",
     "confidence": 0.5466666666666666,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "e2f748665f9ec00527da7aae5b57a9346f930196acdee4b3d446f214eef81586"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "e2f748665f9ec00527da7aae5b57a9346f930196acdee4b3d446f214eef81586",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0011.png",
@@ -45,9 +49,10 @@
     "predicted_label": "ok",
     "confidence": 0.6,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "faec10de1862c20e56c50cb9f5b1effaa6b5000f1c7ba1837d224444295978b5"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "faec10de1862c20e56c50cb9f5b1effaa6b5000f1c7ba1837d224444295978b5",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0012.png",
@@ -55,9 +60,10 @@
     "predicted_label": "ok",
     "confidence": 0.5866666666666667,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "5f5a6b3137d6bacbdeda5b48fc4ebdf4b16af8afece49e16c87047ae532edf49"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "5f5a6b3137d6bacbdeda5b48fc4ebdf4b16af8afece49e16c87047ae532edf49",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0013.png",
@@ -65,9 +71,10 @@
     "predicted_label": "ok",
     "confidence": 0.5066666666666667,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "6c5c231348f8bb6bb69216861ad55644969666ffc13338900c2089f36e611a52"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "6c5c231348f8bb6bb69216861ad55644969666ffc13338900c2089f36e611a52",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0016.png",
@@ -75,9 +82,10 @@
     "predicted_label": "ok",
     "confidence": 0.5466666666666666,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "866f3d0cb25170a30188a10052bf8813eafa43895532bff43ef656875dee0342"
+    "human_label": "ok",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "866f3d0cb25170a30188a10052bf8813eafa43895532bff43ef656875dee0342",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0017.png",
@@ -85,9 +93,10 @@
     "predicted_label": "ok",
     "confidence": 0.6266666666666667,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "ee51be9606ee0e1573cf062cf94a168b1fdcf76094a000c2afad49da3c095305"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "ee51be9606ee0e1573cf062cf94a168b1fdcf76094a000c2afad49da3c095305",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0018.png",
@@ -95,9 +104,10 @@
     "predicted_label": "ok",
     "confidence": 0.6266666666666667,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "68d8a24dc151b411e6b88326a2daf9f79ad4459eaf185d9b49ee3532ae913e75"
+    "human_label": "ok",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "68d8a24dc151b411e6b88326a2daf9f79ad4459eaf185d9b49ee3532ae913e75",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0019.png",
@@ -105,9 +115,10 @@
     "predicted_label": "ok",
     "confidence": 0.6466666666666666,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "4e51f75a74f4151d1b5e99c7eeafba462162f9325fc6417b6d2420933ec83357"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "4e51f75a74f4151d1b5e99c7eeafba462162f9325fc6417b6d2420933ec83357",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0020.png",
@@ -115,9 +126,10 @@
     "predicted_label": "ok",
     "confidence": 0.6266666666666667,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "dc16cd6710eae617d9d1cea7757092778bef6138d3d5cdcd004c5562642052de"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "dc16cd6710eae617d9d1cea7757092778bef6138d3d5cdcd004c5562642052de",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0021.png",
@@ -125,9 +137,10 @@
     "predicted_label": "ok",
     "confidence": 0.5133333333333333,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "f22e771ef3663a5b7976c47d7b782221dd7d3d0f74aa3a5a1068a7a5f9423d88"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "f22e771ef3663a5b7976c47d7b782221dd7d3d0f74aa3a5a1068a7a5f9423d88",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0023.png",
@@ -135,9 +148,10 @@
     "predicted_label": "ok",
     "confidence": 0.62,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "2143b2184d77d638f336843fb67c8e20017b3303ad0849b75164bf277149b982"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "2143b2184d77d638f336843fb67c8e20017b3303ad0849b75164bf277149b982",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0024.png",
@@ -145,9 +159,10 @@
     "predicted_label": "ok",
     "confidence": 0.6466666666666666,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "ee24af0b2884de1269a19c170e0e49381256c842264bbe66c3ed88a0b30ca4c9"
+    "human_label": "ok",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "ee24af0b2884de1269a19c170e0e49381256c842264bbe66c3ed88a0b30ca4c9",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0025.png",
@@ -155,9 +170,10 @@
     "predicted_label": "ok",
     "confidence": 0.6266666666666667,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "2bae928f05704a73c069746e200fb43e68973225679be3cd26d61ba970e595ea"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "2bae928f05704a73c069746e200fb43e68973225679be3cd26d61ba970e595ea",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0027.png",
@@ -165,9 +181,10 @@
     "predicted_label": "ok",
     "confidence": 0.5466666666666666,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "118711d9f47368a2da41165b733b0f87deff4b79dae5eb330aa9973b18773649"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "118711d9f47368a2da41165b733b0f87deff4b79dae5eb330aa9973b18773649",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0028.png",
@@ -175,9 +192,10 @@
     "predicted_label": "ng",
     "confidence": 0.5333333333333333,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "85d83e186306b21a09b6cff1a9d632e7248987e34648ad4b77a259e3ab46439d"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "85d83e186306b21a09b6cff1a9d632e7248987e34648ad4b77a259e3ab46439d",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0030.png",
@@ -185,9 +203,10 @@
     "predicted_label": "ok",
     "confidence": 0.6,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "912aae570c24aa8c04d104956f653cbff2afd99b4cf2562717f88296f19ee3fa"
+    "human_label": "ok",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "912aae570c24aa8c04d104956f653cbff2afd99b4cf2562717f88296f19ee3fa",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0031.png",
@@ -195,9 +214,10 @@
     "predicted_label": "ok",
     "confidence": 0.5866666666666667,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "6c866f7844f09ff2888e5feefd6498a6270815707e393d6ce689ae210581fd39"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "6c866f7844f09ff2888e5feefd6498a6270815707e393d6ce689ae210581fd39",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0032.png",
@@ -205,9 +225,10 @@
     "predicted_label": "ok",
     "confidence": 0.6466666666666666,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "0a856dcaa91cf93965b8f076c9370e5abbe11fab43aa719eea5be5f54faac5ff"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "0a856dcaa91cf93965b8f076c9370e5abbe11fab43aa719eea5be5f54faac5ff",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0033.png",
@@ -215,9 +236,10 @@
     "predicted_label": "ng",
     "confidence": 0.52,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "1b35f3ef7b5bd77062465831b3672b34ba4a8b2e1c7d1d81459cf577d91eb292"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "1b35f3ef7b5bd77062465831b3672b34ba4a8b2e1c7d1d81459cf577d91eb292",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0034.png",
@@ -225,9 +247,10 @@
     "predicted_label": "ok",
     "confidence": 0.5933333333333334,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "59c7df6ee125f8a44edaf95f19d06645b39f48119ac50088b998ea4964b06088"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "59c7df6ee125f8a44edaf95f19d06645b39f48119ac50088b998ea4964b06088",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0035.png",
@@ -235,9 +258,10 @@
     "predicted_label": "ok",
     "confidence": 0.6266666666666667,
     "reason": "mismatch",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "bebc42105ddfc25f537f823018ead5e7788f2885846a7feb82fc149a12c2bae3"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "bebc42105ddfc25f537f823018ead5e7788f2885846a7feb82fc149a12c2bae3",
+    "used_for_version": "model_v2"
   },
   {
     "image_path": "data/new/images/new_0038.png",
@@ -245,8 +269,9 @@
     "predicted_label": "ok",
     "confidence": 0.62,
     "reason": "low_confidence",
-    "human_label": null,
-    "reviewed_at": null,
-    "content_hash": "e7fe9a193fcf38cff73c63e202d3a03b4b55ca85bd404a0ca96ee620f5ad717b"
+    "human_label": "ng",
+    "reviewed_at": "2026-08-13T13:01:28",
+    "content_hash": "e7fe9a193fcf38cff73c63e202d3a03b4b55ca85bd404a0ca96ee620f5ad717b",
+    "used_for_version": "model_v2"
   }
 ]

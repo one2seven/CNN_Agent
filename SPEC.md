@@ -10,8 +10,13 @@ data/
   train/{ok,ng}/*.png      # 고정 학습셋 (Phase 1에서 생성)
   val/{ok,ng}/*.png        # 고정 검증셋 — model_v1/v2 비교에 항상 이것만 사용
   new/
-    images/*.png             # 신규 유입 이미지 시뮬레이션 (완료 — generate_new_batch)
+    images/*.png             # 신규 유입 이미지 시뮬레이션 (완료 — generate_new_batch), 원본이라 손대지 않음
     manifest.json             # [{filename, line_label}] — 기존 라인 QA 판정
+    review/                    # 완료 (Phase 3) — 사람이 실제로 눈으로 보고 분류하는 폴더 (data/new 밑에 둬서 images/와 한 곳에서 관리, 원래 state/review_inbox였음)
+      HOW_TO.txt
+      <미분류 이미지>.png        # 아직 ok/ng로 안 옮긴 것
+      ok/                        # 사람이 정상이라고 판단해 옮긴 이미지
+      ng/                        # 사람이 불량이라고 판단해 옮긴 이미지
 models/
   model_v1.joblib / model_v1.json
   model_v2.joblib / model_v2.json   # 완료 (Phase 3) — base 400장 + 리뷰 25장, val accuracy 78.3%
@@ -19,11 +24,6 @@ models/
 state/
   review_queue.json         # 완료 (Phase 2, infer.py가 생성; content_hash 필드는 Phase 3에서 추가)
   inference_log.json         # 완료 — infer.py 실행마다 전체 추론 결과 기록
-  review_inbox/               # 완료 (Phase 3) — 사람이 실제로 눈으로 보고 분류하는 폴더
-    HOW_TO.txt
-    <미분류 이미지>.png        # 아직 ok/ng로 안 옮긴 것
-    ok/                        # 사람이 정상이라고 판단해 옮긴 이미지
-    ng/                        # 사람이 불량이라고 판단해 옮긴 이미지
   approve.txt                # (Phase 4) 사람이 직접 만들어야 함 — apply_model.py가 성공 시 삭제(1회성)
   reports/
     report_<timestamp>.md      # 완료 (Phase 4) — compare_models.py가 매 실행마다 생성
@@ -33,8 +33,8 @@ scripts/
   common.py            # 완료 — 이미지 로딩/특징 추출 공용 모듈
   train_model.py       # 완료 — train(version, train_dir, extra_X, extra_y)
   infer.py              # 완료 (Phase 2) — 신규 이미지 추론 + Review Queue 수집
-  prepare_review_inbox.py  # 완료 (Phase 3) — 미판정 이미지를 review_inbox/로 복사 + content_hash 기록
-  label_review_queue.py     # 완료 (Phase 3) — review_inbox/ok, ng를 스캔해 사람 판정을 review_queue.json에 반영
+  prepare_review_inbox.py  # 완료 (Phase 3) — 미판정 이미지를 data/new/review/로 복사 + content_hash 기록
+  label_review_queue.py     # 완료 (Phase 3) — data/new/review/ok, ng를 스캔해 사람 판정을 review_queue.json에 반영
   retrain.py            # 완료 (Phase 3) — 트리거 판단(--check) + 사람 라벨 반영 재학습 → model_v2
   compare_models.py     # 완료 (Phase 4) — 기준 vs 후보 모델 비교 + report.md/latest_comparison.json 생성
   apply_model.py        # 완료 (Phase 4) — 판정 "적용 가능" AND approve.txt 있을 때만 current.txt 교체
@@ -60,7 +60,7 @@ scripts/
 ```
 - `reason`: `"mismatch"`(모델 판정이 기존 라인 QA 판정과 다름, 우선순위 높음) / `"low_confidence"`(둘은 같지만 confidence가 임계값 미만) / `"manual_flag"`(사용자가 직접 지정 — 미구현)
 - `human_label`/`reviewed_at`은 Phase 3에서 사람이 채움. 채워진 항목만 재학습 데이터 후보가 됨.
-- `content_hash`는 `prepare_review_inbox.py`가 이미지 파일 내용을 sha256으로 해시해 채운다. 사람이 `review_inbox/`에서 파일을 옮기며 이름을 바꾸거나 하위 폴더를 만들어도 내용은 그대로이므로, `label_review_queue.py`는 파일명이 아니라 이 해시로 원본 큐 항목을 다시 찾는다.
+- `content_hash`는 `prepare_review_inbox.py`가 이미지 파일 내용을 sha256으로 해시해 채운다. 사람이 `data/new/review/`에서 파일을 옮기며 이름을 바꾸거나 하위 폴더를 만들어도 내용은 그대로이므로, `label_review_queue.py`는 파일명이 아니라 이 해시로 원본 큐 항목을 다시 찾는다.
 - `used_for_version`은 `retrain.py`가 그 항목을 실제로 재학습에 사용한 뒤 버전 이름(예: `"model_v2"`)으로 채운다. 이미 채워진 항목은 다음 재학습 트리거 판단에서 제외되어 중복 사용되지 않는다.
 - 신규 이미지는 `data/new/manifest.json`에 `{filename, line_label}`로 나열되고, `line_label`이 위 `reason: mismatch` 판정에 쓰이는 기존 라인 QA 판정이다(`generate_data.py`의 `generate_new_batch`).
 
@@ -97,8 +97,8 @@ scripts/
 ### Phase 3 — 사람 판정 반영 + 재학습
 사람이 실제로 이미지를 열어보고 판정해야 의미가 있으므로(PLAN.md ⑥), 화면 없이 **파일 탐색기로 폴더에 옮기는 것**만으로 판정이 끝나게 설계했다.
 
-1. `prepare_review_inbox.py`: `review_queue.json`에서 아직 `human_label`이 없는 항목의 이미지를 `state/review_inbox/`에 복사하고, 각 항목에 `content_hash`를 채운다. 재실행해도 이미 inbox에 있는(혹은 이미 사람이 ok/ng로 옮긴) 이미지는 다시 복사하지 않는다.
-2. 사람이 `review_inbox/`의 이미지를 직접 열어보고 `ok/` 또는 `ng/` 폴더로 옮기거나 복사한다. **파일 이름을 바꾸거나, 하위 폴더를 만들거나, 실수로 안 옮겨도 된다** — `label_review_queue.py`는 파일명이 아니라 `content_hash`로 원본을 식별한다(`os.walk`로 하위 폴더까지 재귀 탐색).
+1. `prepare_review_inbox.py`: `review_queue.json`에서 아직 `human_label`이 없는 항목의 이미지를 `data/new/review/`에 복사하고, 각 항목에 `content_hash`를 채운다. 재실행해도 이미 inbox에 있는(혹은 이미 사람이 ok/ng로 옮긴) 이미지는 다시 복사하지 않는다. `data/new/images/`(원본)는 절대 바꾸지 않는다.
+2. 사람이 `data/new/review/`의 이미지를 직접 열어보고 `ok/` 또는 `ng/` 폴더로 옮기거나 복사한다. **파일 이름을 바꾸거나, 하위 폴더를 만들거나, 실수로 안 옮겨도 된다** — `label_review_queue.py`는 파일명이 아니라 `content_hash`로 원본을 식별한다(`os.walk`로 하위 폴더까지 재귀 탐색).
 3. `label_review_queue.py`: `ok/`, `ng/`를 스캔해 해시가 일치하는 큐 항목에 `human_label`/`reviewed_at`을 채운다. 예외는 조용히 넘기지 않고 각각 다르게 보고한다:
    - 큐에 없는 내용의 파일(오분류/실수로 섞인 파일) → "알 수 없는 파일"로 보고하고 무시
    - 같은 이미지가 `ok/`와 `ng/` 모두에 있음(복사 실수) → "충돌"로 보고하고 라벨링하지 않음(둘 중 하나를 지우고 재실행해야 함)

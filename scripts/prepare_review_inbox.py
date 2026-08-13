@@ -6,7 +6,9 @@ import shutil
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(ROOT, "state")
 QUEUE_PATH = os.path.join(STATE_DIR, "review_queue.json")
-INBOX_DIR = os.path.join(STATE_DIR, "review_inbox")
+# lives next to data/new/images so a reviewer manages one folder tree
+# instead of jumping between data/ and state/ (was state/review_inbox)
+INBOX_DIR = os.path.join(ROOT, "data", "new", "review")
 OK_DIR = os.path.join(INBOX_DIR, "ok")
 NG_DIR = os.path.join(INBOX_DIR, "ng")
 

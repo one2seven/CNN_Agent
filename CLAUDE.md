@@ -23,8 +23,8 @@ broken Windows Store stub that prints no version and exits non-zero.
 py generate_data.py   # (re)generate data/train, data/val, and data/new (+ manifest.json)
 py train_model.py     # train model_v1 from data/train, evaluate on data/val, save to models/
 py infer.py           # run current model over data/new, update state/review_queue.json
-py prepare_review_inbox.py  # copy pending review-queue images into state/review_inbox/
-py label_review_queue.py    # scan state/review_inbox/{ok,ng}/ and apply human labels back to the queue
+py prepare_review_inbox.py  # copy pending review-queue images into data/new/review/
+py label_review_queue.py    # scan data/new/review/{ok,ng}/ and apply human labels back to the queue
 py retrain.py --check       # report whether enough reviewed-and-unused items exist to retrain
 py retrain.py               # if eligible, train the next model_v<N> on train data + reviewed items
 py compare_models.py        # compare current model vs highest model_vN on data/val, write report + latest_comparison.json
@@ -71,8 +71,10 @@ cases. Current tuning still produces zero actual OK→NG misclassifications on t
 
 ### Human review is folder-based and hash-matched, not filename-matched
 
-`state/review_inbox/{ok,ng}/` is where a person actually sorts flagged images by looking at them — no screen
-needed. `label_review_queue.py` never trusts filenames: it walks both folders recursively and matches files
+`data/new/review/{ok,ng}/` is where a person actually sorts flagged images by looking at them — no screen
+needed. It lives under `data/new/` (next to `images/`) rather than under `state/` so a reviewer isn't jumping
+between two top-level trees for the same batch of images. `label_review_queue.py` never trusts filenames: it
+walks both folders recursively and matches files
 back to `review_queue.json` entries by sha256 content hash (`prepare_review_inbox.py` stamps this hash when it
 copies a pending image in). This is deliberate, not incidental — a real reviewer renames files and drops them
 in nested folders by mistake, and the matching has to survive that. It also means a file with content the

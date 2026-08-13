@@ -6,7 +6,7 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(ROOT, "state")
 QUEUE_PATH = os.path.join(STATE_DIR, "review_queue.json")
-INBOX_DIR = os.path.join(STATE_DIR, "review_inbox")
+INBOX_DIR = os.path.join(ROOT, "data", "new", "review")  # was state/review_inbox
 OK_DIR = os.path.join(INBOX_DIR, "ok")
 NG_DIR = os.path.join(INBOX_DIR, "ng")
 

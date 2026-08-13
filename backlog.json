@@ -178,7 +178,7 @@
       "priority": "핵심",
       "category": "검토",
       "title": "Review Queue 사람 라벨링 (폴더 분류 방식)",
-      "summary": "완료: state/review_inbox/의 25장을 사람이 직접 열어보고 ok/ng 폴더로 분류, label_review_queue.py 실행 후 25건 전부 human_label·reviewed_at이 채워짐(충돌 0, 알 수 없는 파일 0)",
+      "summary": "완료: data/new/review/의 25장을 사람이 직접 열어보고 ok/ng 폴더로 분류, label_review_queue.py 실행 후 25건 전부 human_label·reviewed_at이 채워짐(충돌 0, 알 수 없는 파일 0). 위치는 이후 state/review_inbox에서 data/new/review로 이동(IC-126)",
       "where": "scripts/prepare_review_inbox.py, scripts/label_review_queue.py",
       "parent": null,
       "deps": [
@@ -339,7 +339,7 @@
       "priority": "검증",
       "category": "검증",
       "title": "리뷰 인박스 파일명 변경·폴더 이동 예외 처리 검증",
-      "summary": "완료: review_inbox/ok(또는 ng)에서 파일 이름을 임의로 바꿔도 content_hash로 정상 매칭되고, 큐에 없는 낯선 파일은 '알 수 없는 파일'로만 보고되며 크래시하지 않고, 같은 이미지가 ok·ng 양쪽에 있으면 '충돌'로 보고되고 라벨링되지 않는 것을 확인했다",
+      "summary": "완료: review 폴더의 ok(또는 ng)에서 파일 이름을 임의로 바꿔도 content_hash로 정상 매칭되고, 큐에 없는 낯선 파일은 '알 수 없는 파일'로만 보고되며 크래시하지 않고, 같은 이미지가 ok·ng 양쪽에 있으면 '충돌'로 보고되고 라벨링되지 않는 것을 확인했다",
       "where": "scripts/label_review_queue.py",
       "parent": null,
       "deps": [
@@ -347,7 +347,23 @@
       ],
       "doc": "CLAUDE.md '인간 검토는 폴더 기반·해시 매칭'",
       "done_at": "2026-08-13",
-      "note": "사용자 요청으로 추가 — '내가 오류로 파일이름을 바꾸거나 다른 폴더에 넣는 예외상황'을 실제로 재현해 검증. 격리된 임시 폴더에서 테스트했고 실제 review_inbox는 건드리지 않았다."
+      "note": "사용자 요청으로 추가 — '내가 오류로 파일이름을 바꾸거나 다른 폴더에 넣는 예외상황'을 실제로 재현해 검증. 격리된 임시 폴더에서 테스트했고 실제 인박스는 건드리지 않았다."
+    },
+    {
+      "id": "IC-126",
+      "status": "done",
+      "priority": "핵심",
+      "category": "검토",
+      "title": "리뷰 인박스 위치를 state/에서 data/new/ 밑으로 이동",
+      "summary": "완료: 사람이 분류하는 폴더가 data/new/review/{ok,ng}로 옮겨져 data/new/images(원본)와 한 곳에서 관리된다. prepare_review_inbox.py·label_review_queue.py 재실행으로 정상 동작 확인",
+      "where": "scripts/prepare_review_inbox.py, scripts/label_review_queue.py, data/new/review/",
+      "parent": null,
+      "deps": [
+        "IC-109"
+      ],
+      "doc": "CLAUDE.md '인간 검토는 폴더 기반·해시 매칭'",
+      "done_at": "2026-08-13",
+      "note": "사용자가 'data/new와 state/review_inbox로 이미지가 두 군데 나뉘어 지저분하다'고 지적해서 이동. content_hash 매칭·ok/ng 분류 로직은 그대로, 위치만 바뀜. data/new/images(원본)는 계속 손대지 않는다."
     },
     {
       "id": "IC-119",

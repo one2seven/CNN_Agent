@@ -3,9 +3,11 @@ import math
 import os
 import random
 
+import numpy as np
 from PIL import Image, ImageDraw
 
 random.seed(42)
+np.random.seed(42)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "data")
@@ -13,6 +15,11 @@ DATA_DIR = os.path.join(ROOT, "data")
 IMG_SIZE = 128
 # single shape type keeps shape-choice from swamping the (much smaller) defect signal
 SHAPES = ["circle"]
+# mild sensor-noise stand-in: every image gets this so OK images aren't all
+# byte-identical (otherwise the model is 100% confident on every OK image and
+# the review queue can only ever fill with NG — see PLAN.md 문제 정의, both
+# error directions need to be reachable). Small enough to not shift edges.
+NOISE_SIGMA = 6
 
 
 def draw_shape(draw, shape, cx, cy, r, deform=0.0):
@@ -57,7 +64,7 @@ def add_blob(draw, cx, cy, r, size_scale=1.0):
     draw.ellipse([bx - br, by - br, bx + br, by + br], fill="gray")
 
 
-def make_image(label, ambiguous=False):
+def make_image(label, ambiguous=False, benign_artifact_ratio=0.3):
     img = Image.new("L", (IMG_SIZE, IMG_SIZE), color=255)
     draw = ImageDraw.Draw(img)
     shape = random.choice(SHAPES)
@@ -69,6 +76,12 @@ def make_image(label, ambiguous=False):
 
     if label == "ok":
         draw_shape(draw, shape, cx, cy, r, deform=0.0)
+        # a genuine OK part can still show a benign mark (dust, glare) that
+        # LOOKS like a mild defect without being one — without this, OK images
+        # are too clean and the model can never mistake one for NG, which
+        # blocks the "모델이 OK를 NG로 오판" direction PLAN.md calls out
+        if random.random() < benign_artifact_ratio:
+            add_blob(draw, cx, cy, r, size_scale=random.uniform(0.2, 0.5))
     else:
         # ambiguous NG uses a smaller defect severity so it's genuinely hard to call
         severity = random.uniform(0.15, 0.35) if ambiguous else random.uniform(0.5, 1.0)
@@ -81,7 +94,11 @@ def make_image(label, ambiguous=False):
             add_blob(draw, cx, cy, r, size_scale=severity * 1.5)
         else:
             draw_shape(draw, shape, cx, cy, r, deform=severity * 0.3)
-    return img
+
+    arr = np.asarray(img, dtype=np.float32)
+    arr += np.random.normal(0, NOISE_SIGMA, arr.shape)
+    arr = np.clip(arr, 0, 255).astype(np.uint8)
+    return Image.fromarray(arr, mode="L")
 
 
 def generate_set(out_dir, n_ok, n_ng, ambiguous_ratio=0.0, prefix=""):

@@ -81,7 +81,7 @@
       "priority": "핵심",
       "category": "모델",
       "title": "model_v1 학습 스크립트 및 초기 학습 실행",
-      "summary": "완료: scripts/train_model.py 실행 후 models/model_v1.joblib과 model_v1.json이 생성되고, val accuracy가 기록되어 있다(현재 86.7%)",
+      "summary": "완료: scripts/train_model.py 실행 후 models/model_v1.joblib과 model_v1.json이 생성되고, val accuracy가 기록되어 있다(현재 75.8% — IC-125로 데이터에 노이즈·양성 이물질 추가 후 재학습된 값)",
       "where": "scripts/train_model.py",
       "parent": null,
       "deps": [
@@ -146,7 +146,7 @@
       "priority": "핵심",
       "category": "검토",
       "title": "오분류·저confidence 이미지 Review Queue 자동 수집",
-      "summary": "완료: infer.py 실행 후 state/review_queue.json에 line_label과 다른 판정(mismatch) 또는 confidence 임계값 미만(low_confidence) 이미지가 채워져 있다 (40장 중 12건: mismatch 11 + low_confidence 1)",
+      "summary": "완료: infer.py 실행 후 state/review_queue.json에 line_label과 다른 판정(mismatch) 또는 confidence 임계값 미만(low_confidence) 이미지가 채워져 있다 (40장 중 25건: mismatch 14 + low_confidence 11, 이 중 8건은 실제 OK 이미지 — IC-125 이후)",
       "where": "scripts/infer.py",
       "parent": null,
       "deps": [
@@ -155,6 +155,22 @@
       "doc": "SPEC.md §2, §3 Phase 2",
       "done_at": "2026-08-13",
       "note": "임계값은 제안값 0.65(SPEC.md §4) — 실제 값은 코칭에서 확정(IC-122). PLAN.md ④ Phase 2 완료 기준과 직결, 재실행해도 중복 큐잉되지 않음."
+    },
+    {
+      "id": "IC-125",
+      "status": "done",
+      "priority": "핵심",
+      "category": "데이터",
+      "title": "OK 이미지 다양성 및 양성 이물질(false-positive 유발 요인) 추가",
+      "summary": "완료: OK 이미지가 더 이상 전부 바이트 단위로 동일하지 않고(픽셀 노이즈 추가), 일부는 먼지·반사光 같은 무해한 얼룩(benign_artifact)이 섞여 있어 model_v1이 일부 OK 이미지에서 confidence 100%가 아니라 실제로 낮은 confidence(최저 0.53)를 보인다",
+      "where": "scripts/generate_data.py",
+      "parent": null,
+      "deps": [
+        "IC-102"
+      ],
+      "doc": "CLAUDE.md '비명백한 제약', PLAN.md 문제 정의",
+      "done_at": "2026-08-13",
+      "note": "사용자가 '생성된 이미지가 모두 NG네, OK는 없어?'라고 지적해서 발견 — 기존엔 OK 이미지에 랜덤성이 전혀 없어 모델이 매번 100% 확신·100% 정답이었고, 그래서 리뷰 큐가 구조적으로 NG만 모을 수 있었다(PLAN.md 문제 정의의 두 오류 방향 중 하나가 원천 차단됨). data/train·val·new와 model_v1을 전부 재생성·재학습(val accuracy 86.7%→75.8%). 실제 'OK를 NG로 오판'하는 사례는 이번 배치엔 없었지만(OK recall 100% 유지), OK 이미지가 low_confidence 경로로 리뷰 큐에 들어오는 것은 확인됨(25건 중 8건)."
     },
     {
       "id": "IC-109",

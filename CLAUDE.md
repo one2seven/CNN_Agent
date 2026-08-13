@@ -47,13 +47,23 @@ point later phases (retraining on reviewed data) call into, not a new script.
 `generate_data.py` renders every circle at a **fixed** center and radius, varying only the defect. An earlier
 version randomized position/radius by a few pixels and validation accuracy collapsed to ~60% (near chance):
 the RandomForest was picking up boundary-jitter noise instead of the much smaller defect signal, since raw
-pixel features have no translation invariance. Fixing position/radius brought accuracy to ~86.7%. If you add
-shape variety or jitter back, expect to also change the feature representation (e.g. edge/gradient features
-instead of raw pixels) or accuracy will degrade the same way.
+pixel features have no translation invariance. Fixing position/radius first brought accuracy to ~86.7%. If you
+add shape variety or jitter back, expect to also change the feature representation (e.g. edge/gradient
+features instead of raw pixels) or accuracy will degrade the same way.
 
 `ambiguous_ratio` in `generate_data.py` deliberately generates some NG images with low-severity defects. This
 guarantees genuinely hard/low-confidence cases exist for the review-queue phase to collect — without it, a
 well-separated synthetic dataset could yield zero misclassifications and nothing to review.
+
+OK images additionally get per-pixel Gaussian noise (`NOISE_SIGMA`) and, at `benign_artifact_ratio`, a faint
+blob identical in size to a mild NG defect but labeled OK (stand-in for dust/glare — a real part, not a real
+defect). Without this, every OK image render was byte-identical (zero variance in position/radius/pixels), so
+model_v1 was 100%-confident and 100%-correct on literally every OK image — the review queue could only ever
+fill with NG, and PLAN.md's second error direction ("모델이 OK를 NG로 오판") was structurally unreachable. This
+brought val accuracy down to ~75.8% and put some true-OK images into the review queue as genuine low-confidence
+cases. Current tuning still produces zero actual OK→NG misclassifications on the val set (recall for OK stays
+100%); pushing the benign-artifact size further would very likely change that, at the cost of NG recall
+(already down to ~52%) — treat that as a tuning knob, not a bug, if you touch it.
 
 ### Human review is folder-based and hash-matched, not filename-matched
 

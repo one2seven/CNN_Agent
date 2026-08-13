@@ -1,11 +1,11 @@
 [
   {
     "filename": "new_0000.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0001.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0002.png",
@@ -33,7 +33,7 @@
   },
   {
     "filename": "new_0008.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0009.png",
@@ -45,19 +45,19 @@
   },
   {
     "filename": "new_0011.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0012.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0013.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0014.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0015.png",
@@ -69,27 +69,27 @@
   },
   {
     "filename": "new_0017.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0018.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0019.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0020.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0021.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0022.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0023.png",
@@ -97,7 +97,7 @@
   },
   {
     "filename": "new_0024.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0025.png",
@@ -105,7 +105,7 @@
   },
   {
     "filename": "new_0026.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0027.png",
@@ -117,7 +117,7 @@
   },
   {
     "filename": "new_0029.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0030.png",
@@ -129,23 +129,23 @@
   },
   {
     "filename": "new_0032.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0033.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0034.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0035.png",
-    "line_label": "ok"
+    "line_label": "ng"
   },
   {
     "filename": "new_0036.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0037.png",
@@ -153,7 +153,7 @@
   },
   {
     "filename": "new_0038.png",
-    "line_label": "ng"
+    "line_label": "ok"
   },
   {
     "filename": "new_0039.png",

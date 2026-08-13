@@ -67,7 +67,7 @@ scripts/
   "created_at": "2026-08-13T09:36:49",
   "train_dir": "data/train",
   "n_train": 400,
-  "val_accuracy": 0.8667
+  "val_accuracy": 0.7583
 }
 ```
 
@@ -81,14 +81,14 @@ scripts/
 
 ### Phase 1 — 완료
 `generate_data.py`로 원형 합성 OK/NG 이미지 생성(고정 위치·반경, 결함만 랜덤 — 이유는 CLAUDE.md 참고),
-`train_model.py`로 `model_v1` 학습. val accuracy 86.7%.
+`train_model.py`로 `model_v1` 학습. val accuracy 75.8%(노이즈·양성 이물질 추가 이후 — §1 참고).
 
 ### Phase 2 — 추론 + Review Queue 자동 수집 (완료)
 `infer.py`:
 1. `models/current.txt`(없으면 `model_v1`)로 `data/new/manifest.json`에 나열된 이미지를 추론
 2. 모델 예측이 `line_label`(기존 라인 QA 판정)과 다르면 `reason: mismatch`, 같지만 confidence가 임계값(제안값 0.65 — 코칭에서 확정) 미만이면 `reason: low_confidence`로 `review_queue.json`에 추가. 재실행 시 이미 큐에 있는 이미지는 중복 추가하지 않음
 3. 참고용으로 전체 추론 결과(정답 비교 포함)를 `state/inference_log.json`에 남김
-4. 완료 조건(PLAN.md ④): 실행 후 `review_queue.json`에 1건 이상 존재 — 40장 중 12건(mismatch 11 + low_confidence 1)으로 확인됨
+4. 완료 조건(PLAN.md ④): 실행 후 `review_queue.json`에 1건 이상 존재 — 40장 중 25건(mismatch 14 + low_confidence 11)으로 확인됨, 이 중 8건은 실제 OK 이미지(전부 low_confidence 경로 — §1 노이즈 추가 이후 OK도 큐에 들어올 수 있게 됨)
 
 ### Phase 3 — 사람 판정 반영 + 재학습
 사람이 실제로 이미지를 열어보고 판정해야 의미가 있으므로(PLAN.md ⑥), 화면 없이 **파일 탐색기로 폴더에 옮기는 것**만으로 판정이 끝나게 설계했다.

@@ -1,7 +1,7 @@
 {
   "version": "model_v1",
-  "created_at": "2026-08-13T09:36:49",
+  "created_at": "2026-08-13T11:41:39",
   "train_dir": "D:\\agent\\data\\train",
   "n_train": 400,
-  "val_accuracy": 0.8666666666666667
+  "val_accuracy": 0.7583333333333333
 }

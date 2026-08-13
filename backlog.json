@@ -158,19 +158,19 @@
     },
     {
       "id": "IC-109",
-      "status": "todo",
+      "status": "in_progress",
       "priority": "핵심",
       "category": "검토",
-      "title": "Review Queue 사람 라벨링 CLI",
-      "summary": "완료: 라벨링 스크립트를 실행하면 review_queue.json의 미판정 항목을 하나씩 보여주고, OK/NG를 입력하면 human_label과 reviewed_at이 채워져 파일에 저장된다",
-      "where": "scripts/label_review_queue.py",
+      "title": "Review Queue 사람 라벨링 (폴더 분류 방식)",
+      "summary": "완료: state/review_inbox/에 미판정 이미지가 복사되어 있고, 사람이 그 이미지를 열어보고 ok/ 또는 ng/ 폴더로 옮긴 뒤 라벨링 스크립트를 실행하면 review_queue.json의 human_label·reviewed_at이 채워진다",
+      "where": "scripts/prepare_review_inbox.py, scripts/label_review_queue.py",
       "parent": null,
       "deps": [
         "IC-108"
       ],
-      "doc": "SPEC.md §2",
+      "doc": "SPEC.md §3 Phase 3",
       "done_at": null,
-      "note": "PLAN.md ③ '화면일 필요는 없음' — 터미널 입력으로 충분하다. 이미지 자체는 파일 탐색기 등으로 직접 열어 확인."
+      "note": "PLAN.md ③ '화면일 필요는 없음' — 파일 탐색기로 폴더에 옮기는 것만으로 판정. 도구는 완성·검증됨(IC-124), 실제 12건은 사람이 review_inbox/를 분류해야 완료된다."
     },
     {
       "id": "IC-110",
@@ -186,7 +186,7 @@
       ],
       "doc": "SPEC.md §3 Phase 3",
       "done_at": null,
-      "note": "기준 개수는 제안값 20건(SPEC.md §3 Phase 3) — 코칭에서 확정(IC-124)."
+      "note": "기준 개수는 제안값 20건(SPEC.md §3 Phase 3) — 코칭에서 확정(IC-122)."
     },
     {
       "id": "IC-111",
@@ -316,6 +316,22 @@
       "doc": "PLAN.md ⑤",
       "done_at": null,
       "note": "이게 통과하면 MVP(PLAN.md ③ '반드시') 전체가 실제로 동작한다는 뜻이다."
+    },
+    {
+      "id": "IC-124",
+      "status": "done",
+      "priority": "검증",
+      "category": "검증",
+      "title": "리뷰 인박스 파일명 변경·폴더 이동 예외 처리 검증",
+      "summary": "완료: review_inbox/ok(또는 ng)에서 파일 이름을 임의로 바꿔도 content_hash로 정상 매칭되고, 큐에 없는 낯선 파일은 '알 수 없는 파일'로만 보고되며 크래시하지 않고, 같은 이미지가 ok·ng 양쪽에 있으면 '충돌'로 보고되고 라벨링되지 않는 것을 확인했다",
+      "where": "scripts/label_review_queue.py",
+      "parent": null,
+      "deps": [
+        "IC-109"
+      ],
+      "doc": "CLAUDE.md '인간 검토는 폴더 기반·해시 매칭'",
+      "done_at": "2026-08-13",
+      "note": "사용자 요청으로 추가 — '내가 오류로 파일이름을 바꾸거나 다른 폴더에 넣는 예외상황'을 실제로 재현해 검증. 격리된 임시 폴더에서 테스트했고 실제 review_inbox는 건드리지 않았다."
     },
     {
       "id": "IC-119",

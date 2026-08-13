@@ -6,7 +6,8 @@
     "confidence": 0.9,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "54e6111a9ba070f40ad873ec871f80d736571c8cf6e216442c128ffe5983342f"
   },
   {
     "image_path": "data/new/images/new_0004.png",
@@ -15,7 +16,8 @@
     "confidence": 0.8133333333333334,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "148833c487a862583e589e7f93082cab767dc6da2074fbf7222a32660c8f4323"
   },
   {
     "image_path": "data/new/images/new_0007.png",
@@ -24,7 +26,8 @@
     "confidence": 0.6333333333333333,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "faf04eb59a49fc611d97948a671f7169b77cf148fcaa8e83ec27ad27e25111e6"
   },
   {
     "image_path": "data/new/images/new_0011.png",
@@ -33,7 +36,8 @@
     "confidence": 1.0,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "d76f003098ffe9e304abeeca953a3e411fad43514857c13af70f6c9b04a45452"
   },
   {
     "image_path": "data/new/images/new_0015.png",
@@ -42,7 +46,8 @@
     "confidence": 0.5266666666666666,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "f36f3da46b7435dccd8b2447b4cd3f40831830e576f376a929901c3d3da18198"
   },
   {
     "image_path": "data/new/images/new_0019.png",
@@ -51,7 +56,8 @@
     "confidence": 0.74,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "10da853fcf321af0ee2b0cf4030882b772e753196287ff2b326f9e79439d0464"
   },
   {
     "image_path": "data/new/images/new_0023.png",
@@ -60,7 +66,8 @@
     "confidence": 0.56,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "cff8015060ded08c2babbc2e04735dbbeb88b5a09937bad43482610af363bfd8"
   },
   {
     "image_path": "data/new/images/new_0024.png",
@@ -69,7 +76,8 @@
     "confidence": 0.86,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "6dedcf7eeb096236ca45fd3b8e3f0bcd6c7a2834d433a1f6d1bce3c6a544ff27"
   },
   {
     "image_path": "data/new/images/new_0027.png",
@@ -78,7 +86,8 @@
     "confidence": 0.64,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "e5b43bb5c0cdc270d89a3eebb24b0fa98735b9e68ea7f679f652447cde115b16"
   },
   {
     "image_path": "data/new/images/new_0028.png",
@@ -87,7 +96,8 @@
     "confidence": 0.5066666666666667,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "c42e1eb35bfe2ed399de9d9f1ea6705992578102a83a868f90361ba525f2c47b"
   },
   {
     "image_path": "data/new/images/new_0036.png",
@@ -96,7 +106,8 @@
     "confidence": 0.6066666666666667,
     "reason": "low_confidence",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "dde2220fcf0dd786d90324a1a5367a3a6b8efebe84b8cbc00570679e54ad99e4"
   },
   {
     "image_path": "data/new/images/new_0038.png",
@@ -105,6 +116,7 @@
     "confidence": 0.9,
     "reason": "mismatch",
     "human_label": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "content_hash": "380cd5a7a323a581a5da1908b6ed7ff05575bdfb3b668be19fd3f0ff8a5b4aa8"
   }
 ]

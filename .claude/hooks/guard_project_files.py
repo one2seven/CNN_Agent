@@ -11,8 +11,9 @@ REASONS = {
         "label_review_queue.py를 실행해달라고 요청하세요."
     ),
     "approve.txt": (
-        "approve.txt는 운영 모델 교체를 사람이 최종 승인했다는 신호입니다 (PLAN.md ⑤). "
-        "Claude가 대신 만들 수 없습니다 — 사람이 직접 만들어야 합니다."
+        "approve.txt는 리포트별 승인 상태 목록입니다 (compare_models.py가 '<리포트경로>: 대기' 줄을 자동으로 남깁니다). "
+        "운영 모델 교체를 사람이 최종 승인했다는 신호이므로 (PLAN.md ⑤) Claude가 상태를 '승인'으로 바꿀 수 없습니다 — "
+        "사람이 직접 해당 줄을 수정해야 합니다."
     ),
 }
 

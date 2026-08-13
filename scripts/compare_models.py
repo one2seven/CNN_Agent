@@ -15,6 +15,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 MODELS_DIR = os.path.join(ROOT, "models")
 STATE_DIR = os.path.join(ROOT, "state")
 REPORTS_DIR = os.path.join(STATE_DIR, "reports")
+APPROVE_PATH = os.path.join(STATE_DIR, "approve.txt")
 
 LABEL_NAMES = {0: "ok", 1: "ng"}
 
@@ -127,7 +128,8 @@ def run(old_version=None, new_version=None):
         "",
         f"(판정 기준은 제안값 — SPEC.md §4, 코칭에서 확정 예정. accuracy 저하 없음 AND regression 비율 <= {MAX_REGRESSION_RATE:.0%})",
         "",
-        "적용하려면 state/approve.txt를 만든 뒤 apply_model.py를 실행해야 합니다 (사람 승인 없이는 자동 적용되지 않음).",
+        "적용하려면 state/approve.txt에서 이 리포트에 해당하는 줄을 '승인'으로 바꾼 뒤 apply_model.py를 실행해야 합니다 "
+        "(사람이 직접 상태를 바꾸지 않으면 자동 적용되지 않음).",
     ]
 
     with open(report_path, "w", encoding="utf-8") as f:
@@ -147,6 +149,9 @@ def run(old_version=None, new_version=None):
     }
     with open(os.path.join(REPORTS_DIR, "latest_comparison.json"), "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
+
+    with open(APPROVE_PATH, "a", encoding="utf-8") as f:
+        f.write(f"{summary['report_path']}: 대기\n")
 
     print(f"{old_version} accuracy={old_metrics['accuracy']:.4f}  {new_version} accuracy={new_metrics['accuracy']:.4f}")
     print(f"Regressions: {len(regressions)} ({regression_rate:.1%})  Improvements: {len(improvements)}")

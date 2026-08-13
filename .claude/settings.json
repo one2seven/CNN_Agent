@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py D:/agent/.claude/hooks/guard_project_files.py",
+            "statusMessage": "Checking review_queue.json / approve.txt guard..."
+          }
+        ]
+      }
+    ]
+  }
+}

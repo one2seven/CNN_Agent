@@ -1,0 +1,92 @@
+# SPEC.md
+
+이미지 학습 자동화 — 기술 명세. 요구사항·범위·완료 기준의 계약은 `PLAN.md`가 원본이고, 이 문서는 그걸
+구현하기 위한 디렉토리 구조·데이터 스키마·Phase별 기술 설계를 정리한다. PLAN.md와 상충하면 PLAN.md가 우선.
+
+## 1. 디렉토리 구조
+
+```
+data/
+  train/{ok,ng}/*.png      # 고정 학습셋 (Phase 1에서 생성)
+  val/{ok,ng}/*.png        # 고정 검증셋 — model_v1/v2 비교에 항상 이것만 사용
+  new/                      # (Phase 2) 매일 들어오는 신규 이미지 시뮬레이션
+models/
+  model_v1.joblib / model_v1.json
+  model_v2.joblib / model_v2.json   # (Phase 3+)
+  current.txt                        # (Phase 4) 현재 운영 모델 버전 이름 1줄
+state/
+  review_queue.json         # (Phase 2+)
+  approve.txt                # (Phase 4) 존재해야 모델 교체 스크립트가 실행됨
+  reports/report_<timestamp>.md   # (Phase 4)
+scripts/
+  generate_data.py    # 완료
+  common.py            # 완료 — 이미지 로딩/특징 추출 공용 모듈
+  train_model.py       # 완료 — train(version, train_dir, extra_X, extra_y)
+  infer.py              # (Phase 2) 신규 이미지 추론 + Review Queue 수집
+  retrain.py            # (Phase 3) 사람 라벨 반영 재학습 → model_v2
+  compare_models.py     # (Phase 4) model_v1 vs model_v2 비교 + report.md 생성
+  apply_model.py        # (Phase 4) approve.txt 있을 때만 current.txt 교체
+```
+
+## 2. 데이터 스키마
+
+### `state/review_queue.json` (Phase 2에서 생성/갱신)
+```json
+[
+  {
+    "image_path": "data/new/img_0001.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.58,
+    "reason": "low_confidence",
+    "human_label": null,
+    "reviewed_at": null
+  }
+]
+```
+- `reason`: `"low_confidence"`(임계값 미만) 또는 `"manual_flag"`(사용자가 직접 지정)
+- `human_label`/`reviewed_at`은 Phase 3에서 사람이 채움. 채워진 항목만 재학습 데이터 후보가 됨.
+
+### `models/<version>.json` (Phase 1에서 구현 완료)
+```json
+{
+  "version": "model_v1",
+  "created_at": "2026-08-13T09:36:49",
+  "train_dir": "data/train",
+  "n_train": 400,
+  "val_accuracy": 0.8667
+}
+```
+
+### `state/reports/report_<timestamp>.md` (Phase 4)
+최소 포함 항목:
+- model_v1 vs model_v2: Accuracy, OK/NG 각각의 Precision·Recall
+- 기존엔 맞았는데 신규에서 틀린 이미지 목록, 기존엔 틀렸는데 신규에서 맞은 이미지 목록
+- 결론: 적용 가능 / 불가 (판정 근거 포함)
+
+## 3. Phase별 기술 설계
+
+### Phase 1 — 완료
+`generate_data.py`로 원형 합성 OK/NG 이미지 생성(고정 위치·반경, 결함만 랜덤 — 이유는 CLAUDE.md 참고),
+`train_model.py`로 `model_v1` 학습. val accuracy 86.7%.
+
+### Phase 2 — 추론 + Review Queue 자동 수집
+`infer.py`:
+1. `models/current.txt`(없으면 `model_v1`)로 `data/new/`의 이미지를 추론
+2. confidence가 임계값(제안값 0.65 — 코칭에서 확정) 미만이거나, 사람이 별도로 지정한 이미지를 `review_queue.json`에 추가
+3. 완료 조건(PLAN.md ④): 실행 후 `review_queue.json`에 1건 이상 존재
+
+### Phase 3 — 사람 판정 반영 + 재학습
+- 사람이 `review_queue.json`의 `human_label`, `reviewed_at`을 채움 (간단한 CLI 프롬프트 또는 직접 JSON 편집)
+- `retrain.py`: `human_label`이 채워진 항목만 골라 이미지를 로드하고 `train_model.train(version="model_v2", extra_X=..., extra_y=...)` 호출
+- 재학습 트리거 조건(제안값 — 코칭에서 확정): `human_label` 채워진 신규 항목이 20건 이상 쌓이면 실행 가능 상태로 표시
+- 완료 조건: `model_v2.joblib` 생성됨
+
+### Phase 4 — 비교 + 리포트 + 승인 게이트
+- `compare_models.py`: 고정 `data/val`셋에 대해 `model_v1`, `model_v2` 각각 추론 → 지표 계산 → `report.md` 생성
+- 적용 기준(제안값 — 코칭에서 확정): `model_v2` accuracy가 `model_v1` 이상이고, 기존에 맞았는데 신규에서 틀리는 이미지 비율이 일정 수준(제안 5%) 이하일 때만 "적용 가능"으로 표시
+- `apply_model.py`: `state/approve.txt` 파일이 있을 때만 `models/current.txt`를 `model_v2`로 교체. 없으면 실행이 실패(거부)해야 함 — 이게 PLAN.md ⑤의 사람 승인 게이트
+
+## 4. 아직 확정 안 된 것 (PLAN.md "1:1 코칭에서 가장 묻고 싶은 것" 및 "고칠 곳"과 연결)
+- confidence 임계값, 재학습 트리거 개수, 적용 승인 임계치 — 위 제안값은 구현을 막지 않기 위한 기본값일 뿐, 코칭에서 조정 예정
+- 망분리 환경에서 실제 이미지·판정 데이터를 Claude에게 전달하는 방법 (PLAN.md 코칭 질문) — 이 SPEC은 로컬 파일 접근을 전제로 하므로, 실제 적용 시 데이터 반입 경로 설계가 별도로 필요

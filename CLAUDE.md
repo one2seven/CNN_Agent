@@ -19,9 +19,10 @@ Python on this machine must be invoked as `py`, not `python` — the `python`/`p
 broken Windows Store stub that prints no version and exits non-zero.
 
 ```bash
-# from scripts/ (train_model.py imports common.py as a same-directory module)
-py generate_data.py   # (re)generate data/train and data/val synthetic image sets
+# from scripts/ (each script imports common.py as a same-directory module)
+py generate_data.py   # (re)generate data/train, data/val, and data/new (+ manifest.json)
 py train_model.py     # train model_v1 from data/train, evaluate on data/val, save to models/
+py infer.py           # run current model over data/new, update state/review_queue.json
 ```
 
 `train_model.py` exposes `train(version, train_dir=None, extra_X=None, extra_y=None)` — this is the entry

@@ -109,27 +109,27 @@
     },
     {
       "id": "IC-106",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "데이터",
       "title": "신규 이미지 유입 시뮬레이션 데이터 준비",
-      "summary": "완료: scripts/generate_data.py 계열 함수로 data/new/에 매일 들어오는 신규 이미지처럼 라벨을 감춘 이미지 배치가 생성된다",
-      "where": "data/new/",
+      "summary": "완료: generate_data.py의 generate_new_batch()로 data/new/images/에 40장, data/new/manifest.json에 각 이미지의 기존 라인 QA 판정(line_label)이 생성된다",
+      "where": "scripts/generate_data.py, data/new/",
       "parent": null,
       "deps": [
         "IC-102"
       ],
-      "doc": "SPEC.md §3 Phase 2",
-      "done_at": null,
-      "note": "실제 정답(OK/NG)은 알고 있되 infer.py에는 넘기지 않는다 — Phase 3에서 사람이 다시 판정하는 것을 시뮬레이션하기 위함."
+      "doc": "SPEC.md §1, §3 Phase 2",
+      "done_at": "2026-08-13",
+      "note": "line_label은 '이미 참여 중인 사람의 현장 판정'을 시뮬레이션한 것 — infer.py가 모델 예측과 비교하는 기준이 된다. Phase 3의 '리뷰 담당자 재판정'과는 다른 개념."
     },
     {
       "id": "IC-107",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "모델",
       "title": "신규 이미지 추론 스크립트",
-      "summary": "완료: scripts/infer.py를 실행하면 data/new/의 각 이미지에 대해 model_v1의 OK/NG 판정과 confidence가 출력·기록된다",
+      "summary": "완료: scripts/infer.py를 실행하면 data/new/의 각 이미지에 대해 model_v1의 OK/NG 판정과 confidence가 state/inference_log.json에 기록된다",
       "where": "scripts/infer.py",
       "parent": null,
       "deps": [
@@ -137,24 +137,24 @@
         "IC-106"
       ],
       "doc": "SPEC.md §3 Phase 2",
-      "done_at": null,
+      "done_at": "2026-08-13",
       "note": "models/current.txt가 있으면 그 버전을, 없으면 model_v1을 사용한다(SPEC.md §3 Phase 2)."
     },
     {
       "id": "IC-108",
-      "status": "todo",
+      "status": "done",
       "priority": "핵심",
       "category": "검토",
-      "title": "confidence 낮은 이미지 Review Queue 자동 수집",
-      "summary": "완료: infer.py 실행 후 state/review_queue.json에 confidence가 임계값 미만인 이미지가 1건 이상 채워져 있다",
+      "title": "오분류·저confidence 이미지 Review Queue 자동 수집",
+      "summary": "완료: infer.py 실행 후 state/review_queue.json에 line_label과 다른 판정(mismatch) 또는 confidence 임계값 미만(low_confidence) 이미지가 채워져 있다 (40장 중 12건: mismatch 11 + low_confidence 1)",
       "where": "scripts/infer.py",
       "parent": null,
       "deps": [
         "IC-107"
       ],
       "doc": "SPEC.md §2, §3 Phase 2",
-      "done_at": null,
-      "note": "임계값은 제안값 0.65(SPEC.md §4) — 실제 값은 코칭에서 확정(IC-124). PLAN.md ④ Phase 2 완료 기준과 직결."
+      "done_at": "2026-08-13",
+      "note": "임계값은 제안값 0.65(SPEC.md §4) — 실제 값은 코칭에서 확정(IC-122). PLAN.md ④ Phase 2 완료 기준과 직결, 재실행해도 중복 큐잉되지 않음."
     },
     {
       "id": "IC-109",

@@ -1,3 +1,4 @@
+import json
 import math
 import os
 import random
@@ -97,11 +98,34 @@ def generate_set(out_dir, n_ok, n_ng, ambiguous_ratio=0.0, prefix=""):
         img.save(os.path.join(ng_dir, f"{prefix}ng_{i:04d}.png"))
 
 
+def generate_new_batch(out_dir, n, ambiguous_ratio=0.3):
+    """Simulate a day's worth of incoming images, each already tagged by the
+    existing line QA process (PLAN.md '현재 상황': 사람이 이미 OK/NG 판단에 참여).
+    `line_label` is that routine tag, kept separate from the model's prediction
+    so infer.py can compare the two instead of "knowing" the answer."""
+    images_dir = os.path.join(out_dir, "images")
+    os.makedirs(images_dir, exist_ok=True)
+    manifest = []
+    for i in range(n):
+        label = random.choice(["ok", "ng"])
+        ambiguous = label == "ng" and random.random() < ambiguous_ratio
+        img = make_image(label, ambiguous=ambiguous)
+        fname = f"new_{i:04d}.png"
+        img.save(os.path.join(images_dir, fname))
+        manifest.append({"filename": fname, "line_label": label})
+    with open(os.path.join(out_dir, "manifest.json"), "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=2)
+    return manifest
+
+
 if __name__ == "__main__":
     train_dir = os.path.join(DATA_DIR, "train")
     val_dir = os.path.join(DATA_DIR, "val")
+    new_dir = os.path.join(DATA_DIR, "new")
     # ambiguous_ratio guarantees some low-confidence / hard cases exist,
     # which Phase 2's review-queue collection depends on (see PLAN.md 고칠 곳 #2)
     generate_set(train_dir, n_ok=200, n_ng=200, ambiguous_ratio=0.25)
     generate_set(val_dir, n_ok=60, n_ng=60, ambiguous_ratio=0.25)
+    manifest = generate_new_batch(new_dir, n=40, ambiguous_ratio=0.3)
     print("Generated train: 200 ok + 200 ng, val: 60 ok + 60 ng")
+    print(f"Generated new: {len(manifest)} incoming images with line_label manifest")

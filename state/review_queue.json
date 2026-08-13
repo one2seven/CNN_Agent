@@ -1,0 +1,110 @@
+[
+  {
+    "image_path": "data/new/images/new_0003.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.9,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0004.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.8133333333333334,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0007.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.6333333333333333,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0011.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 1.0,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0015.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.5266666666666666,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0019.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.74,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0023.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.56,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0024.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.86,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0027.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.64,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0028.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.5066666666666667,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0036.png",
+    "model_version": "model_v1",
+    "predicted_label": "ng",
+    "confidence": 0.6066666666666667,
+    "reason": "low_confidence",
+    "human_label": null,
+    "reviewed_at": null
+  },
+  {
+    "image_path": "data/new/images/new_0038.png",
+    "model_version": "model_v1",
+    "predicted_label": "ok",
+    "confidence": 0.9,
+    "reason": "mismatch",
+    "human_label": null,
+    "reviewed_at": null
+  }
+]

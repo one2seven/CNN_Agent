@@ -9,20 +9,23 @@
 data/
   train/{ok,ng}/*.png      # 고정 학습셋 (Phase 1에서 생성)
   val/{ok,ng}/*.png        # 고정 검증셋 — model_v1/v2 비교에 항상 이것만 사용
-  new/                      # (Phase 2) 매일 들어오는 신규 이미지 시뮬레이션
+  new/
+    images/*.png             # 신규 유입 이미지 시뮬레이션 (완료 — generate_new_batch)
+    manifest.json             # [{filename, line_label}] — 기존 라인 QA 판정
 models/
   model_v1.joblib / model_v1.json
   model_v2.joblib / model_v2.json   # (Phase 3+)
   current.txt                        # (Phase 4) 현재 운영 모델 버전 이름 1줄
 state/
-  review_queue.json         # (Phase 2+)
+  review_queue.json         # 완료 (Phase 2, infer.py가 생성)
+  inference_log.json         # 완료 — infer.py 실행마다 전체 추론 결과 기록
   approve.txt                # (Phase 4) 존재해야 모델 교체 스크립트가 실행됨
   reports/report_<timestamp>.md   # (Phase 4)
 scripts/
-  generate_data.py    # 완료
+  generate_data.py    # 완료 — train/val/new(manifest 포함) 모두 생성
   common.py            # 완료 — 이미지 로딩/특징 추출 공용 모듈
   train_model.py       # 완료 — train(version, train_dir, extra_X, extra_y)
-  infer.py              # (Phase 2) 신규 이미지 추론 + Review Queue 수집
+  infer.py              # 완료 (Phase 2) — 신규 이미지 추론 + Review Queue 수집
   retrain.py            # (Phase 3) 사람 라벨 반영 재학습 → model_v2
   compare_models.py     # (Phase 4) model_v1 vs model_v2 비교 + report.md 생성
   apply_model.py        # (Phase 4) approve.txt 있을 때만 current.txt 교체
@@ -30,22 +33,23 @@ scripts/
 
 ## 2. 데이터 스키마
 
-### `state/review_queue.json` (Phase 2에서 생성/갱신)
+### `state/review_queue.json` (Phase 2에서 생성/갱신 — `infer.py`)
 ```json
 [
   {
-    "image_path": "data/new/img_0001.png",
+    "image_path": "data/new/images/new_0003.png",
     "model_version": "model_v1",
     "predicted_label": "ok",
-    "confidence": 0.58,
-    "reason": "low_confidence",
+    "confidence": 0.9,
+    "reason": "mismatch",
     "human_label": null,
     "reviewed_at": null
   }
 ]
 ```
-- `reason`: `"low_confidence"`(임계값 미만) 또는 `"manual_flag"`(사용자가 직접 지정)
+- `reason`: `"mismatch"`(모델 판정이 기존 라인 QA 판정과 다름, 우선순위 높음) / `"low_confidence"`(둘은 같지만 confidence가 임계값 미만) / `"manual_flag"`(사용자가 직접 지정 — 미구현)
 - `human_label`/`reviewed_at`은 Phase 3에서 사람이 채움. 채워진 항목만 재학습 데이터 후보가 됨.
+- 신규 이미지는 `data/new/manifest.json`에 `{filename, line_label}`로 나열되고, `line_label`이 위 `reason: mismatch` 판정에 쓰이는 기존 라인 QA 판정이다(`generate_data.py`의 `generate_new_batch`).
 
 ### `models/<version>.json` (Phase 1에서 구현 완료)
 ```json
@@ -70,11 +74,12 @@ scripts/
 `generate_data.py`로 원형 합성 OK/NG 이미지 생성(고정 위치·반경, 결함만 랜덤 — 이유는 CLAUDE.md 참고),
 `train_model.py`로 `model_v1` 학습. val accuracy 86.7%.
 
-### Phase 2 — 추론 + Review Queue 자동 수집
+### Phase 2 — 추론 + Review Queue 자동 수집 (완료)
 `infer.py`:
-1. `models/current.txt`(없으면 `model_v1`)로 `data/new/`의 이미지를 추론
-2. confidence가 임계값(제안값 0.65 — 코칭에서 확정) 미만이거나, 사람이 별도로 지정한 이미지를 `review_queue.json`에 추가
-3. 완료 조건(PLAN.md ④): 실행 후 `review_queue.json`에 1건 이상 존재
+1. `models/current.txt`(없으면 `model_v1`)로 `data/new/manifest.json`에 나열된 이미지를 추론
+2. 모델 예측이 `line_label`(기존 라인 QA 판정)과 다르면 `reason: mismatch`, 같지만 confidence가 임계값(제안값 0.65 — 코칭에서 확정) 미만이면 `reason: low_confidence`로 `review_queue.json`에 추가. 재실행 시 이미 큐에 있는 이미지는 중복 추가하지 않음
+3. 참고용으로 전체 추론 결과(정답 비교 포함)를 `state/inference_log.json`에 남김
+4. 완료 조건(PLAN.md ④): 실행 후 `review_queue.json`에 1건 이상 존재 — 40장 중 12건(mismatch 11 + low_confidence 1)으로 확인됨
 
 ### Phase 3 — 사람 판정 반영 + 재학습
 - 사람이 `review_queue.json`의 `human_label`, `reviewed_at`을 채움 (간단한 CLI 프롬프트 또는 직접 JSON 편집)

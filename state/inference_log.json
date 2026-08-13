@@ -1,0 +1,326 @@
+{
+  "model_version": "model_v1",
+  "run_at": "2026-08-13T10:16:57",
+  "results": [
+    {
+      "image_path": "data/new/images/new_0000.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0001.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 1.0,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0002.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 0.82,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0003.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.9,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0004.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.8133333333333334,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0005.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0006.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0007.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.6333333333333333,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0008.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0009.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 1.0,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0010.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0011.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0012.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0013.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0014.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 0.9333333333333333,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0015.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.5266666666666666,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0016.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0017.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0018.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 0.9,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0019.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.74,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0020.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0021.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0022.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0023.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.56,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0024.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.86,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0025.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 1.0,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0026.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0027.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.64,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0028.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.5066666666666667,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0029.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0030.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0031.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0032.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0033.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0034.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0035.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0036.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 0.6066666666666667,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0037.png",
+      "model_version": "model_v1",
+      "predicted_label": "ng",
+      "confidence": 1.0,
+      "line_label": "ng",
+      "match": true
+    },
+    {
+      "image_path": "data/new/images/new_0038.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 0.9,
+      "line_label": "ng",
+      "match": false
+    },
+    {
+      "image_path": "data/new/images/new_0039.png",
+      "model_version": "model_v1",
+      "predicted_label": "ok",
+      "confidence": 1.0,
+      "line_label": "ok",
+      "match": true
+    }
+  ]
+}
